@@ -1,0 +1,54 @@
+.factor-table {
+
+    font-size: 13px;
+
+    .factor-title {
+        border-bottom: 2px solid #DDD;
+        padding: 5px;
+    }
+
+    .factor-icon {
+        text-align: center;
+    }
+
+    .factor-item-cell,
+    .factor-score-cell {
+        text-align: center;
+        font-size: 11px;
+    }
+
+    .factor-bar-cell {
+        width: 90%;
+
+        .factor-bar-wrapper {
+            background-color: #EEE;
+            position: relative;
+
+            .factor-bar,
+            .average-bar,
+            .high-bar {
+                height: 15px;
+            }
+
+            .average-bar,
+            .high-bar {
+                position: absolute;
+                top: 0;
+            }
+
+            .factor-bar {
+                background-color: #400099;
+            }
+
+            .average-bar {
+                border-right: 2px solid #F87C03;
+            }
+
+            .high-bar {
+                border-right: 2px solid #00AF41;
+            }
+        }
+    }
+
+    
+}
