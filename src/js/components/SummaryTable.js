@@ -1,13 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Table } from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMinus, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faSortUp, faSortDown, faChild } from '@fortawesome/free-solid-svg-icons';
 
-export default function SummaryTable(props) {
-    const { data } = props;
-    const overviewData = data.overview;
-    const changeData = data.change;
-    const detailsData = data.details;
+function SummaryTable(props) {
+    const { isLoading, overviewData, changeData, detailsData } = props;
 
     return (
         <div className="summary-table">
@@ -21,12 +19,15 @@ export default function SummaryTable(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td className={getRankClass(overviewData.score)}>{overviewData.score}</td>
-                        <td className={getRankClass(overviewData.regionalRank)}>{overviewData.regionalRank}</td>
-                        <td className={getRankClass(overviewData.incomeRank)}>{overviewData.incomeRank}</td>
-                        <td className={getRankClass(overviewData.globalRank)}>{overviewData.globalRank}</td>
-                    </tr>
+                    {
+                        isLoading ? <tr><td colSpan={4}>Loading ...</td></tr> :
+                        <tr>
+                            <td className={getRankClass(overviewData.score)}>{overviewData.score}</td>
+                            <td className={getRankClass(overviewData.regionalRank)}>{overviewData.regionalRank}</td>
+                            <td className={getRankClass(overviewData.incomeRank)}>{overviewData.incomeRank}</td>
+                            <td className={getRankClass(overviewData.globalRank)}>{overviewData.globalRank}</td>
+                        </tr>
+                    }
                 </tbody>
             </Table>
             <Table borderless className="change-table">
@@ -37,17 +38,20 @@ export default function SummaryTable(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>{changeData.score.toFixed(2)}</td>
-                        <td>{getTrendSymbol(changeData.rank)}</td>
-                    </tr>
+                    {
+                        isLoading ? <tr><td colSpan={2}>Loading ...</td></tr> :
+                        <tr>
+                            <td>{changeData.score.toFixed(2)}</td>
+                            <td>{getTrendSymbol(changeData.rank)}</td>
+                        </tr>
+                    } 
                 </tbody>
             </Table>
             <Table borderless className="details-table">
                 <thead>
                     <tr>
-                        <th></th>
-                        <th></th>
+                        <th className="factor-icon-cell" ></th>
+                        <th className="factor-title-cell" ></th>
                         <th>Factor Trend</th>
                         <th>Factor Score</th>
                         <th>Regional Rank</th>
@@ -55,25 +59,38 @@ export default function SummaryTable(props) {
                         <th>Global Rank</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {
-                        detailsData.map((item, index) => 
-                            <tr key={index}>
-                                <td className="factor-icon-cell" style={{color: item.titleColor}}>{item.icon}</td>
-                                <th className="factor-title-cell" style={{color: item.titleColor}}>{item.title}</th>
-                                <td>{getTrendSymbol(item.trend)}</td>
-                                <td>{item.score}</td>
-                                <td className={getRankClass(item.regionalRank)}>{item.regionalRank}</td>
-                                <td className={getRankClass(item.incomeRank)}>{item.incomeRank}</td>
-                                <td className={getRankClass(item.globalRank)}>{item.globalRank}</td>
-                            </tr>
-                        )
-                    }
-                </tbody>
+                    <tbody>
+                        {   
+                            isLoading ? <tr><td colSpan={7}>Loading ...</td></tr> :
+                            detailsData.map((item, index) => 
+                                <tr key={index}>
+                                    <td className="factor-icon-cell" style={{color: item.titleColor}}><FontAwesomeIcon icon={faChild} /></td>
+                                    <td className="factor-title-cell" style={{color: item.titleColor}}>{item.title}</td>
+                                    <td>{getTrendSymbol(item.trend)}</td>
+                                    <td>{item.score}</td>
+                                    <td className={getRankClass(item.regionalRank)}>{item.regionalRank}</td>
+                                    <td className={getRankClass(item.incomeRank)}>{item.incomeRank}</td>
+                                    <td className={getRankClass(item.globalRank)}>{item.globalRank}</td>
+                                </tr>
+                            )
+                        }
+                    </tbody>
             </Table>
         </div>
     )
 }
+
+function mapStateToProps(state) {
+    return {
+        isLoading: state.profileSummary.isLoading,
+        error: state.profileSummary.error,
+        overviewData: state.profileSummary.data.overview,
+        changeData: state.profileSummary.data.change,
+        detailsData: state.profileSummary.data.details
+    }
+}
+
+export default connect(mapStateToProps)(SummaryTable);
 
 /*
  * Gets CSS class for a ranking.

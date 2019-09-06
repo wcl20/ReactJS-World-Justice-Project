@@ -1,5 +1,7 @@
 import React from "react";
 import { Table } from "reactstrap";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChild } from '@fortawesome/free-solid-svg-icons';
 
 export default function FactorTable(props) {
     return (
@@ -8,14 +10,16 @@ export default function FactorTable(props) {
                 <tr>
                     <th></th>
                     <th className="factor-title" style={{color: props.titleColor}}>{props.title}</th>
-                    <th className="factor-icon" style={{color: props.titleColor}}>{props.icon}</th>
+                    <th className="factor-icon" style={{color: props.titleColor}}>
+                        <FontAwesomeIcon icon={faChild} size="2x"/>
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 {
                     props.data.map((item, index) => 
                         <tr key={index}>
-                            <td className="factor-item-cell">{`1.${index + 1}`}</td>
+                            <td className="factor-item-cell">{`${props.factorIndex}.${index + 1}`}</td>
                             <td className="factor-bar-cell">
                                 <div className="factor-bar-wrapper">
                                     <div className="factor-bar" style={{width: `${item.score * 100}%`}}></div>
