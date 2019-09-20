@@ -91,99 +91,38 @@ const summary = {
     ]
 }
 
-const details = [
-    {
-        factorTitle: "Constraints on Government Powers",
-        metaData : { color: "#327644" },
-        items: [
-            { score: 0.69, title: "Limits by Legislature", average: 0.59, high: 0.72 },
-            { score: 0.71, title: "Limits by judiciary", average: 0.59, high: 0.72 },
-            { score: 0.62, title: "Independent auditing", average: 0.59, high: 0.72 },
-            { score: 0.69, title: "Sanctions for official misconduct", average: 0.59, high: 0.72 },
-            { score: 0.61, title: "Non-government checks", average: 0.59, high: 0.72 },
-        ],
-    },
-    {
-        factorTitle: "Absence of Corruption",
-        metaData : { color: "#709608" },
-        items: [
-            { score: 0.69, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.41, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.62, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.69, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.61, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.91, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.36, title: "title", average: 0.59, high: 0.72 }
-        ],
-    },
-    {
-        factorTitle: "Open Government",
-        metaData : { color: "#00997F" },
-        items: [
-            { score: 0.69, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.23, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.62, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.69, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.61, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.91, title: "title", average: 0.59, high: 0.72 },
-        ]
-    },
-    {
-        factorTitle: "Fundamental Rights",
-        metaData : { color: "#2D72B7" },
-        items: [
-            { score: 0.69, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.91, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.62, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.69, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.61, title: "title", average: 0.59, high: 0.72 },
-        ],
-    },
-    {
-        factorTitle: "Order and Security",
-        metaData : { color: "#3A2E72" },
-        items: [
-            { score: 0.69, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.91, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.62, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.69, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.61, title: "title", average: 0.59, high: 0.72 },
-        ],
-    },
-    {
-        factorTitle: "Regulatory Enforcement",
-        metaData : { color: "#90278F" },
-        items: [
-            { score: 0.69, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.91, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.62, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.69, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.61, title: "title", average: 0.59, high: 0.72 },
-        ],
-    },
-    {
-        factorTitle: "Civil Justice",
-        metaData : { color: "#7F2220" },
-        items: [
-            { score: 0.69, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.91, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.62, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.69, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.61, title: "title", average: 0.59, high: 0.72 },
-        ],
-    },
-    {
-        factorTitle: "Criminal Justice",
-        metaData : { color: "#E57839" },
-        items: [
-            { score: 0.69, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.91, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.62, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.69, title: "title", average: 0.59, high: 0.72 },
-            { score: 0.61, title: "title", average: 0.59, high: 0.72 },
-        ],
-    },
-];
+function generateRandomDetails() {
+    const factors = [
+        "Constraints on Government Powers",
+        "Absence of Corruption",
+        "Open Government",
+        "Fundamental Rights",
+        "Order and Security",
+        "Regulatory Enforcement",
+        "Civil Justice",
+        "Criminal Justice",
+    ];
+    const colors = [ "#327644", "#709608", "#00997F", "#2D72B7", "#3A2E72", "#90278F", "#7F2220", "#E57839"];
+    const data = [];
+    factors.forEach((factor, i) => {
+        const items = [];
+        for(let i = 0; i < Math.round(Math.random() * 2) + 5; i++) {
+            items.push({ 
+                title: "title", 
+                score: Math.random(), 
+                average: Math.random(), 
+                high: Math.random() 
+            });
+        }
+        data.push({
+            factorTitle: factor,
+            metaData: { color: colors[i] },
+            items: items
+        });
+    })
+    return data;
+}
+
 function getSummary() {
     return new Promise(function(resolve) {
         setTimeout(function() { resolve(summary) }, 3000);
@@ -192,6 +131,6 @@ function getSummary() {
 
 function getDetails() {
     return new Promise(function(resolve) {
-        setTimeout(function() { resolve(details) }, 3000);
+        setTimeout(function() { resolve(generateRandomDetails()) }, 3000);
     })
 }

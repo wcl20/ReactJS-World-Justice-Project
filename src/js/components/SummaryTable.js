@@ -4,6 +4,8 @@ import { Table } from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faSortUp, faSortDown, faChild } from '@fortawesome/free-solid-svg-icons';
 
+import Spinner from "../components/presentational/Spinner";
+
 function SummaryTable(props) {
     const { isLoading, overviewData, changeData, detailsData } = props;
 
@@ -61,7 +63,7 @@ function SummaryTable(props) {
                 </thead>
                     <tbody>
                         {   
-                            isLoading ? <tr><td colSpan={7}>Loading ...</td></tr> :
+                            !isLoading &&
                             detailsData.map((item, index) => 
                                 <tr key={index}>
                                     <td className="factor-icon-cell" style={{color: item.titleColor}}><FontAwesomeIcon icon={faChild} /></td>
@@ -76,6 +78,7 @@ function SummaryTable(props) {
                         }
                     </tbody>
             </Table>
+            {isLoading && <Spinner />}
         </div>
     )
 }

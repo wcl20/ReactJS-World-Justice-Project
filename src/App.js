@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 
 import configureStore from "./js/store";
+import HomePage from "./js/views/HomePage";
 import ProfilePage from "./js/views/ProfilePage";
 import "./scss/main.scss";
 
@@ -13,7 +14,8 @@ function App() {
         <Provider store={store}>
             <Router>
                 <Switch>
-                    <Route exact path="/profile" component={ProfilePage}/>
+                    <Route exact path="/" component={HomePage} />
+                    <Route exact path="/profile/:id" component={ProfilePage}/>
                 </Switch>
             </Router>
         </Provider>

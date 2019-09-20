@@ -1,0 +1,14 @@
+.navbar {
+    background-color: #400099;
+
+    .navbar-title {
+        color: #FFF;
+        font-weight: 700;
+
+        &:hover {
+            opacity: 0.8;
+            cursor: pointer;
+            text-decoration: none;
+        }
+    }
+}

@@ -5,17 +5,18 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 am4core.useTheme(am4themes_animated);
 
-class RadialGraph extends Component {
+class DetailsGraph extends Component {
 
     constructor(props) {
         super(props);
 
+        // amCharts Functions
         this.generateRadarData = this.generateRadarData.bind(this);
         this.createRange = this.createRange.bind(this);
     }
 
     componentDidMount() {
-        let chart = am4core.create("chartdiv", am4charts.RadarChart);
+        let chart = am4core.create("detailsChartDiv", am4charts.RadarChart);
         chart.radius = am4core.percent(60);
 
         // category axis
@@ -30,10 +31,11 @@ class RadialGraph extends Component {
 
         let categoryAxisLabel = categoryAxisRenderer.labels.template;
         categoryAxisLabel.radius = 28;
+        categoryAxisLabel.location = 0.5;
 
         // value axis
         let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-        valueAxis.extraMax = 0.2;
+        valueAxis.extraMax = 0.05;
         valueAxis.disabled = true; // Hide value axis
 
         // series
@@ -41,7 +43,8 @@ class RadialGraph extends Component {
         series.dataFields.categoryX = "index";
         series.dataFields.valueY = "score";
         series.dataFields.title = "title";
-        series.tooltipText = "{title}: {valueY.value}"
+        series.tooltipText = "{title}: {valueY.value}";
+        series.dataItems.template.locations.categoryX = 0.5;
         series.stroke = am4core.color("#400099");
         series.strokeWidth = 3;
         series.fill = am4core.color("#400099");
@@ -76,6 +79,8 @@ class RadialGraph extends Component {
     componentDidUpdate(oldProps) {
         if(oldProps.data !== this.props.data) {
             this.chart.data = this.generateRadarData(this.props.data);
+        }
+        if(oldProps.isLoading !== this.props.isLoading) {
             this.props.isLoading ? this.indicator.show() : this.indicator.hide();
         }
     }
@@ -84,6 +89,9 @@ class RadialGraph extends Component {
         if (this.chart) { this.chart.dispose(); }
     }
 
+    /**********************
+     * amCharts Functions
+     **********************/
     generateRadarData(data) {
         let radarData = [];
         // Iterate all factors ...
@@ -128,7 +136,7 @@ class RadialGraph extends Component {
     
         // axis fill - on hover
         let hoverState = axisFill.states.create("hover");
-        hoverState.properties.innerRadius = -10;
+        hoverState.properties.innerRadius = -5;
         hoverState.properties.radius = -25;
 
         // axis label
@@ -143,7 +151,7 @@ class RadialGraph extends Component {
     
     render() {
         return (
-            <div id="chartdiv" style={{ width: "100%", height: "550px" }}></div>
+            <div id="detailsChartDiv" style={{ width: "100%", height: "550px" }}></div>
         );
     }
 }
@@ -156,7 +164,7 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(RadialGraph);
+export default connect(mapStateToProps)(DetailsGraph);
 
 
 

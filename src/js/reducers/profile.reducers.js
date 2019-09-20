@@ -17,7 +17,7 @@ export function profileSummary(state = { data: {}, isLoading: false }, action) {
 export function profileDetails(state = { data: [], isLoading: false }, action) {
     switch(action.type) {
         case generateRequestActionType(PROFILE_DETAILS):
-            return Object.assign({}, state, { isLoading: true });
+            return Object.assign({}, state, { isLoading: true, data: [] });
         case generateSuccessActionType(PROFILE_DETAILS):
             return Object.assign({}, state, { isLoading: false, data: action.payload });
         case generateFailureActionType(PROFILE_DETAILS):

@@ -28,7 +28,7 @@ export default function FactorTable(props) {
                                 </div>
                                 <div>{item.title}</div>
                             </td>
-                            <td className="factor-score-cell">{item.score}</td>
+                            <td className="factor-score-cell">{item.score.toFixed(2)}</td>
                         </tr>
                     )
                 }

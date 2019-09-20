@@ -3,19 +3,21 @@ import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
 
 import FactorTable from "../components/presentational/FactorTable";
+import Spinner from "../components/presentational/Spinner";
 
 function DetailsTable(props) {
     const { isLoading, data } = props;
     return(
         <Fragment>
             {   
-                isLoading ? <div>Loading...</div> :
+                isLoading ? 
+                <Row><Col><Spinner /></Col></Row> :
                 data.map((_, index, array) => {
                     if(index % 3 !== 0) return <div key={index}></div>;
                     let factor1 = array[index], factor2 = array[index + 1], factor3 = array[index + 2];
                     return (
                         <Row key={index}>
-                            <Col>
+                            <Col sm={12} md={4}>
                                 {
                                     factor1 &&
                                     <FactorTable 
@@ -26,7 +28,7 @@ function DetailsTable(props) {
                                     />  
                                 }
                             </Col>
-                            <Col>
+                            <Col sm={12} md={4}>
                                 {
                                     factor2 &&
                                     <FactorTable 
@@ -37,7 +39,7 @@ function DetailsTable(props) {
                                     />  
                                 }
                             </Col>
-                            <Col>
+                            <Col sm={12} md={4}>
                                 {
                                     factor3 &&
                                     <FactorTable 
